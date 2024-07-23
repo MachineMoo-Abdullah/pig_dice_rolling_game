@@ -155,8 +155,51 @@ dmypy.json
 cython_debug/
 
 # PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+import random as r
+
+def dice():
+    return r.randint(1, 6)
+
+print("**********************************")
+print("*     Pig Dice Rolling Game      *")
+print("**********************************\n")
+while True:
+    player_num = input("How many players want to participate (2-4): ")
+    if player_num.isdigit():
+        player = int(player_num)
+        if 2 <= player <= 4:
+            break
+        else:
+            print("Players must be between 2 and 4 to continue with the game!")
+    else:
+        print("Invalid choice, try again!")
+
+
+max_score = 50
+player_scores = [0 for _ in range(int(player_num))]
+while max(player_scores) < max_score:
+    for player_index in range(int(player_num)):
+        current_score = 0
+        print(f"\nYou are player {player_index + 1}, your turn\n")
+        print(f"Your total score is {player_scores[player_index]}")
+        while True:
+            ans = input("Do you want to roll the dice (y)? ")
+            if ans.lower() != "y":
+                break
+            value = dice()
+            if value == 1:
+                print("You got 1 after rolling the dice!")
+                current_score = 0
+                break
+            else:
+                current_score += value
+                print(f"You got {value} after rolling the dice")
+            print(f"Your score is: {current_score}")
+        player_scores[player_index] += current_score
+        print(f"Your total score is {player_scores[player_index]}")
+
+max_score = max(player_scores)
+winning_index = player_scores.index(max_score)
+print(f"Player {winning_index + 1} is the winner of the game!")
+
 #.idea/
